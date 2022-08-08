@@ -1,0 +1,43 @@
+1.
+SELECT *,
+CASE 
+	WHEN Name LIKE 'HL%' THEN 'Happy Locomotion Holdings'
+	WHEN Name LIKE 'Men%' THEN 'Human Garments'
+	WHEN NaME LIKE 'Women%' THEN 'Human Garments'
+	ElSE Name
+END AS Type
+FROM [AdventureWorks2019].[Production].[Product]
+
+2.
+SELECT Name
+FROM [AdventureWorks2019].[Production].[Product]
+WHERE EXISTS (SELECT Name FROM [AdventureWorks2019].[Production].[ProductCategory] WHERE [AdventureWorks2019].[Production].[ProductCategory].[ProductCategoryID] = [AdventureWorks2019].[Production].[Product].ProductSubcategoryID AND ProductSubcategoryID = 3);
+
+3.
+SELECT *
+FROM [AdventureWorks2019].[Sales].[SalesOrderHeader]
+INNER JOIN [AdventureWorks2019].[Sales].[Customer] ON [AdventureWorks2019].[Sales].[SalesOrderHeader].CustomerID = [AdventureWorks2019].[Sales].[Customer].CustomerID
+INNER JOIN [AdventureWorks2019].[Person].[Person] ON [AdventureWorks2019].[Sales].[Customer].PersonID = [AdventureWorks2019].[Person].[Person].BusinessEntityID
+WHERE TotalDue > 50000;
+
+4.
+SELECT [AdventureWorks2019].[Production].[Product].Name
+  FROM [AdventureWorks2019].[Sales].[SalesOrderDetail]
+  INNER JOIN [AdventureWorks2019].[Production].[Product] ON [AdventureWorks2019].[Sales].[SalesOrderDetail].ProductID = [AdventureWorks2019].[Production].[Product].ProductID
+  GROUP By [AdventureWorks2019].[Production].[Product].Name
+  HAVING SUM([AdventureWorks2019].[Sales].[SalesOrderDetail].OrderQty) > 5
+  ORDER By Name;
+
+5.
+SELECT *
+  FROM [AdventureWorks2019].[Production].[Product]
+  WHERE [AdventureWorks2019].[Production].[Product].ListPrice > (
+	SELECT ListPrice
+	FROM [AdventureWorks2019].[Production].[Product]
+	WHERE ProductNumber = 'FR-R72R-60');
+
+6.
+SELECT *, ListPrice-StandardCost AS MarkUp
+  FROM [AdventureWorks2019].[Production].[Product]
+  ORDER By MarkUp;
+
