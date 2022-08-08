@@ -1,0 +1,43 @@
+1.
+SELECT 
+( SELECT COUNT(DISTINCT([AdventureWorks2019].[Sales].[Store].Name)) 
+FROM [AdventureWorks2019].[Sales].[Store])
+-	
+(SELECT COUNT(DISTINCT([AdventureWorks2019].[Sales].[Customer].CustomerID))
+FROM [AdventureWorks2019].[Sales].[Customer]
+) 
+AS ComparedAmount
+ ;
+
+2.
+SELECT City, (COUNT(DISTINCT AddressLine2)*100/COUNT(DISTINCT AddressLine1)) AS HaveAddress2Percentage
+FROM [AdventureWorks2019].[Person].[Address]
+GROUP By City
+ORDER By HaveAddress2Percentage DESC;
+
+3.
+SELECT Color,AVG(StandardCost) AS AverageStandardCost,AVG(ListPrice) AS AverageListPrice
+FROM [AdventureWorks2019].[Production].[Product]
+GROUP By Color;
+
+4.
+SELECT SUBSTRING(ProductNumber,1,2), COUNT(SUBSTRING(ProductNumber,1,2))
+FROM [AdventureWorks2019].[Production].[Product]
+GROUP By SUBSTRING(ProductNumber,1,2);
+
+5.
+SELECT Size,AVG(Weight)
+FROM [AdventureWorks2019].[Production].[Product]
+GROUP By Size;
+
+6.
+SELECT COUNT(DISTINCT CustomerID) AS DifferentCustomerNumber
+FROM [AdventureWorks2019].[Sales].[SalesOrderHeader]；
+
+SELECT CustomerID, COUNT(*)
+FROM [AdventureWorks2019].[Sales].[SalesOrderHeader]
+GROUP By CustomerID;
+
+7.
+SELECT COUNT(rowguid) AS TotalGUIDAmount,COUNT(DISTINCT rowguid) AS DifferentGUIDAmount
+FROM [AdventureWorks2019].[Sales].[Customer]
