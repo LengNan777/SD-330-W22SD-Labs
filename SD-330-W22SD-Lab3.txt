@@ -1,0 +1,39 @@
+1.
+SELECT *
+FROM [AdventureWorks2019].[Sales].[SalesOrderHeader]
+INNER JOIN [AdventureWorks2019].[Sales].[SalesOrderDetail] ON [AdventureWorks2019].[Sales].[SalesOrderHeader].SalesOrderID = [AdventureWorks2019].[Sales].[SalesOrderDetail].SalesOrderID;
+
+2.
+SELECT *
+FROM [AdventureWorks2019].[Sales].[SalesOrderDetail]
+INNER JOIN [AdventureWorks2019].[Production].[Product] ON [AdventureWorks2019].[Sales].[SalesOrderDetail].ProductID = [AdventureWorks2019].[Production].[Product].ProductID
+WHERE OrderQty>=5;
+
+3.
+SELECT *
+FROM [AdventureWorks2019].[Production].[Product]
+INNER JOIN [AdventureWorks2019].[Production].[ProductSubCategory] ON [AdventureWorks2019].[Production].[Product].ProductSubcategoryID = [AdventureWorks2019].[Production].[ProductSubcategory].ProductSubcategoryID
+INNER JOIN [AdventureWorks2019].[Production].[ProductCategory] ON [AdventureWorks2019].[Production].[ProductSubcategory].ProductCategoryID = [AdventureWorks2019].[Production].[ProductCategory].ProductCategoryID
+WHERE [AdventureWorks2019].[Production].[ProductCategory].Name = 'Bikes' AND [AdventureWorks2019].[Production].[Product].Weight < 10000;
+
+4.
+SELECT [AdventureWorks2019].[Sales].[SalesOrderDetail].*,[AdventureWorks2019].[Sales].[SalesOrderHeader].SubTotal
+FROM [AdventureWorks2019].[Sales].[SalesOrderDetail]
+INNER JOIN [AdventureWorks2019].[Sales].[SalesOrderHeader] ON [AdventureWorks2019].[Sales].[SalesOrderDetail].[SalesOrderID] = [AdventureWorks2019].[Sales].[SalesOrderHeader].[SalesOrderID];
+
+5.
+SELECT [AdventureWorks2019].[Person].[Address].AddressLine1,[AdventureWorks2019].[Person].[Person].FirstName,[AdventureWorks2019].[Person].[Person].LastName
+FROM [AdventureWorks2019].[Sales].[Customer]
+INNER JOIN [AdventureWorks2019].[Person].[Person] ON [AdventureWorks2019].[Sales].[Customer].PersonID = [AdventureWorks2019].[Person].[Person].BusinessEntityID
+INNER JOIN [AdventureWorks2019].[Person].[BusinessEntity] ON [AdventureWorks2019].[Person].[Person].BusinessEntityID = [AdventureWorks2019].[Person].[BusinessEntity].BusinessEntityID
+INNER JOIN [AdventureWorks2019].[Person].[BusinessEntityAddress] ON [AdventureWorks2019].[Person].[BusinessEntity].BusinessEntityID = [AdventureWorks2019].[Person].[BusinessEntityAddress].BusinessEntityID
+INNER JOIN [AdventureWorks2019].[Person].[Address] ON [AdventureWorks2019].[Person].[BusinessEntityAddress].AddressID = [AdventureWorks2019].[Person].[Address].AddressID;
+
+6.
+SELECT [AdventureWorks2019].[Person].[Address].AddressLine1, COUNT(*) AS CustomerNum
+FROM [AdventureWorks2019].[Sales].[Customer]
+INNER JOIN [AdventureWorks2019].[Person].[Person] ON [AdventureWorks2019].[Sales].[Customer].PersonID = [AdventureWorks2019].[Person].[Person].BusinessEntityID
+INNER JOIN [AdventureWorks2019].[Person].[BusinessEntity] ON [AdventureWorks2019].[Person].[Person].BusinessEntityID = [AdventureWorks2019].[Person].[BusinessEntity].BusinessEntityID
+INNER JOIN [AdventureWorks2019].[Person].[BusinessEntityAddress] ON [AdventureWorks2019].[Person].[BusinessEntity].BusinessEntityID = [AdventureWorks2019].[Person].[BusinessEntityAddress].BusinessEntityID
+INNER JOIN [AdventureWorks2019].[Person].[Address] ON [AdventureWorks2019].[Person].[BusinessEntityAddress].AddressID = [AdventureWorks2019].[Person].[Address].AddressID
+GROUP By [AdventureWorks2019].[Person].[Address].AddressLine1;
